@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRules>
+    <!-- 1. 文件夹名字 -->
+    <FolderRules>
+        <FolderNaming desc="学生文件夹命名必须为 学生学号+班号+姓名">
+            <Regex>^\d{8}-\d{6}-[\u4e00-\u9fa5]+$</Regex>
+        </FolderNaming>
+    </FolderRules>
+
+    <!-- 2. 学生材料要求 -->
+    <StudentMaterials>
+        <Files>
+            <!-- 论文皮：只允许 PSD 格式，单版本 -->
+            <File id="paper_cover" desc="论文皮" versions="single">
+                <Pattern>^1-1-\d{8}[\u4e00-\u9fa5]+-论文皮\.psd$</Pattern>
+            </File>
+            <!-- 论文：必须包含《北京工业大学毕业设计（论文）任务书》的内容，双版本（Word和PDF） -->
+            <File id="thesis_text" desc="论文" versions="double">
+                <Pattern>^1-2-\d{8}[\u4e00-\u9fa5]+-论文\.(docx|pdf)$</Pattern>
+                <Extra>应符合论文撰写规范，并包含《北京工业大学毕业设计（论文）任务书》</Extra>
+            </File>
+            <!-- 学生开题报告表 -->
+            <File id="opening_report" desc="学生开题报告表" versions="double">
+                <Pattern>^2-\d{8}[\u4e00-\u9fa5]+-北京工业大学学生开题报告表\.(docx|pdf)$</Pattern>
+                 <SignatureRequirement role="teacher"/>
+            </File>
+            <!-- 学生自查表 -->
+            <File id="self_check" desc="学生自查表" versions="double">
+                <Pattern>^3-\d{8}[\u4e00-\u9fa5]+-北京工业大学毕业设计（论文）学生自查表\.(docx|pdf)$</Pattern>
+            </File>
+            <!-- 申请答辩表+指导教师评审表 -->
+            <File id="defense_application_1" desc="学生申请答辩表" versions="double">
+                <Pattern>^4-1-\d{8}[\u4e00-\u9fa5]+-北京工业大学学生申请答辩表\.(docx|pdf)$</Pattern>
+                <SignatureRequirement role="student"/>
+            </File>
+            <File id="defense_application_2" desc="指导教师毕业设计（论文）评审表" versions="double">
+                <Pattern>^4-2-\d{8}[\u4e00-\u9fa5]+-指导教师毕业设计（论文）评审表\.(docx|pdf)$</Pattern>
+                 <SignatureRequirement role="teacher"/>
+            </File>
+            <!-- 译文皮：只允许 PSD 格式，单版本 -->
+            <File id="translation_cover" desc="译文皮" versions="single">
+                <Pattern>^5-1-\d{8}[\u4e00-\u9fa5]+-译文皮\.psd$</Pattern>
+            </File>
+            <!-- 译文：要求双版本，且外文资料译文在前、原文在后 -->
+            <File id="translation_text" desc="译文" versions="double">
+                <Pattern>^5-2 \d{8}[\u4e00-\u9fa5]+-译文\.(docx|pdf)$</Pattern>
+                <Extra>外文资料译文在前、原文在后</Extra>
+            </File>
+            <!-- 查重报告（简洁版）：默认要求双版本，但若仅有 PDF 版则允许；且必须附上指导教师的电子签 -->
+            <File id="check_report_simple" desc="查重报告（简洁版）" versions="double">
+                <Pattern>^6-1 \d{8}[\u4e00-\u9fa5]+-查重报告（简洁版）\.(docx|pdf)$</Pattern>
+                <Note>如只有PDF版，则仅交PDF版</Note>
+                <SignatureRequirement>teacher</SignatureRequirement>
+                 <SignatureRequirement role="teacher"/>
+            </File>
+            <!-- 查重报告（复杂版）：要求双版本，附指导教师签名 -->
+            <File id="check_report_complex" desc="查重报告（复杂版）" versions="double">
+                <Pattern>^6-2 \d{8}[\u4e00-\u9fa5]+-查重报告（复杂版）\.(docx|pdf)$</Pattern>
+                <SignatureRequirement>teacher</SignatureRequirement>
+                 <SignatureRequirement role="teacher"/>
+            </File>
+            <!-- 论文格式检测报告 -->
+            <File id="format_report" desc="论文格式检测报告" versions="double">
+                <Pattern>^7-\d{8}[\u4e00-\u9fa5]+-论文格式检测报告\.(docx|pdf)$</Pattern>
+                 <SignatureRequirement role="teacher"/>
+            </File>
+            <!-- 毕业设计评审表（评阅人用）-1 -->
+            <File id="review_form_1" desc="毕业设计评审表（评阅人用）-1" versions="double">
+                <Pattern>^8-1-\d{8}[\u4e00-\u9fa5]+-北京工业大学毕业设计评审表（评阅人用）-1\.(docx|pdf)$</Pattern>
+            </File>
+            <!-- 毕业设计评审表（评阅人用）-2 -->
+            <File id="review_form_2" desc="毕业设计评审表（评阅人用）-2" versions="double">
+                <Pattern>^8-2-\d{8}[\u4e00-\u9fa5]+-北京工业大学毕业设计评审表（评阅人用）-2\.(docx|pdf)$</Pattern>
+            </File>
+            <!-- 答辩评审表 -->
+            <File id="defense_form" desc="答辩评审表" versions="double">
+                <Pattern>^9-\d{8}[\u4e00-\u9fa5]+-答辩评审表\.(docx|pdf)$</Pattern>
+            </File>
+            <!-- 内容审读结果确认书 -->
+            <File id="content_review" desc="毕业设计（论文）内容审读结果确认书" versions="double">
+                <Pattern>^10-\d{8}[\u4e00-\u9fa5]+-毕业设计（论文）内容审读结果确认书\.(docx|pdf)$</Pattern>
+                 <SignatureRequirement role="teacher"/>
+            </File>
+            <!-- 小黄本 -->
+            <File id="yellow_book" desc="小黄本" versions="double">
+                <Pattern>^11-\d{8}[\u4e00-\u9fa5]+-小黄本\.(docx|pdf)$</Pattern>
+            </File>
+            <!-- 其他材料 -->
+            <File id="other_materials" desc="其他材料" versions="double">
+                <Pattern>^12-\d{8}-[\u4e00-\u9fa5]+-其他材料\.(docx|pdf)$</Pattern>
+            </File>
+        </Files>
+        <!-- 签名要求：除论文皮和译文皮外，其他所有文件必须包含电子签 -->
+        <SignatureCheck default="true" exclude="paper_cover,translation_cover"/>
+    </StudentMaterials>
+
+    <!-- 3. 答辩组材料要求 -->
+    <ReviewGroupMaterials>
+        <Files>
+            <!-- 答辩现场评审记录：每位答辩组成员各一份 -->
+            <File id="defense_record" desc="答辩现场评审记录" versions="single">
+                <Pattern>^1-[\u4e00-\u9fa5]+-[\u4e00-\u9fa5]+-信息学部本科毕业设计（论文）答辩现场评审记录\.(docx|pdf)$</Pattern>
+                <Repeat>one_per_member</Repeat>
+            </File>
+            <!-- 答辩组评分记录 -->
+            <File id="defense_score" desc="答辩组评分记录" versions="single">
+                <Pattern>^2-[\u4e00-\u9fa5]+-答辩组评分记录\.(docx|pdf)$</Pattern>
+            </File>
+        </Files>
+    </ReviewGroupMaterials>
+
+    <!-- 4. 日期规则 -->
+    <DateRules>
+        <!-- 日期格式 YYYY-MM-DD -->
+        <DateFormat regex="^\d{4}-\d{2}-\d{2}$"/>
+        <Chronological>
+            <!-- 指导教师评审表中的教师签字日期至少在答辩前 7 天 -->
+            <Field name="TeacherSignDate" minOffset="-7"/>
+            <!-- 内容审读结果确认书日期必须介于查重报告日期与答辩日期之间 -->
+            <Field name="ContentReviewDate" after="CheckReportDate" before="DefenseDate"/>
+        </Chronological>
+    </DateRules>
+
+    <!-- 5. 文件版本要求 -->
+    <VersionRequirements>
+        <Rule id="double_version" desc="除论文皮和译文皮外，其余文件必须同时存在 Word 版和 PDF 版">
+            <Exclude>
+                <File>paper_cover</File>
+                <File>translation_cover</File>
+            </Exclude>
+        </Rule>
+    </VersionRequirements>
+</ValidationRules>
