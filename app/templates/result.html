@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>格式检查报告</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .pass { color: green; }
+    .fail { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <h2 class="mb-4">格式检查报告</h2>
+
+    <!-- 显示总体的通过和未通过项 -->
+<!--    <div class="mb-3">-->
+<!--      <h4>通过项</h4>-->
+<!--      <ul>-->
+<!--        {% for item in report.pass_items %}-->
+<!--          <li>{{ item }}</li>-->
+<!--        {% endfor %}-->
+<!--      </ul>-->
+<!--    </div>-->
+
+<!--    <div class="mb-3">-->
+<!--      <h4>未通过项</h4>-->
+<!--      <ul>-->
+<!--        {% for item in report.fail_items %}-->
+<!--          <li>{{ item }}</li>-->
+<!--        {% endfor %}-->
+<!--      </ul>-->
+<!--    </div>-->
+
+    <!-- 文件夹命名检查 -->
+    <div class="card mb-3">
+      <div class="card-header">
+        文件夹命名检查
+      </div>
+      <div class="card-body">
+        <p>预期格式：<code>{{ report.folder_naming.expected }}</code></p>
+        <p>实际输入：<code>{{ report.folder_naming.actual }}</code></p>
+        <p>检查结果：
+          {% if report.folder_naming.result %}
+            <span class="pass">通过</span>
+          {% else %}
+            <span class="fail">未通过</span>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+
+<!--    &lt;!&ndash; 上传文件列表 &ndash;&gt;-->
+<!--    <div class="mb-3">-->
+<!--      <h4>上传文件列表</h4>-->
+<!--      <ul>-->
+<!--        {% for file in report.uploaded_files %}-->
+<!--          <li>{{ file }}</li>-->
+<!--        {% endfor %}-->
+<!--      </ul>-->
+<!--    </div>-->
+
+    <!-- 学生材料检查 -->
+    <div class="mb-3">
+      <h4>学生材料检查</h4>
+      {% for key, material in report.StudentMaterials.items() %}
+        <div class="card mb-2">
+          <div class="card-header">
+             {{ material.desc }}
+          </div>
+          <div class="card-body">
+            <p>匹配文件：{{ material.matched_files | join(', ') }}</p>
+            <p>版本检查：
+              {% if material.version_ok %}
+                <span class="pass">通过</span>
+              {% else %}
+                <span class="fail">未通过</span>
+              {% endif %}
+            </p>
+            {% if material.content_check %}
+              <h6>内容检查：</h6>
+              <ul>
+              {% for item in material.content_check %}
+                <li>
+                  {{ item.file }} -
+                  {% if item.result %}
+                    <span class="pass">{{ item.message }}</span>
+                  {% else %}
+                    <span class="fail">{{ item.message }}</span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+            {% if material.signature_check %}
+              <h6>电子签名检查：</h6>
+              <ul>
+              {% for item in material.signature_check %}
+                <li>
+                  {{ item.file }} -
+                  {% if item.result %}
+                    <span class="pass">{{ item.message }}</span>
+                  {% else %}
+                    <span class="fail">{{ item.message }}</span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- 答辩组材料检查 -->
+    <div class="mb-3">
+      <h4>答辩组材料检查</h4>
+      {% for key, material in report.ReviewGroupMaterials.items() %}
+        <div class="card mb-2">
+          <div class="card-header">
+            {{ key }}
+          </div>
+          <div class="card-body">
+            <p>匹配文件：{{ material.matched_files | join(', ') }}</p>
+            <p>版本检查：
+              {% if material.version_ok %}
+                <span class="pass">通过</span>
+              {% else %}
+                <span class="fail">未通过</span>
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- 日期检查 -->
+    <div class="mb-3">
+      <h4>日期检查</h4>
+      <p>
+        教师签字日期：
+        {% if report.DateRules.teacher_sign_date %}
+           {{ report.DateRules.teacher_sign_date }}
+        {% else %}
+          <span class="fail">未提取到教师签字日期</span>
+        {% endif %}
+      </p>
+      <p>答辩日期：{{ report.DateRules.defense_date }}</p>
+      <p>教师签字日期检查：
+       {% if report.DateRules.teacher_date_ok %}
+         <span class="pass">符合要求</span>
+        {% else %}
+         <span class="fail">不符合要求（教师签字日期需至少比答辩日期提前7天）</span>
+        {% endif %}
+      </p>
+    </div>
+
+</p>
+      <p>日期顺序检查：
+        {% if report.DateRules.sequence_ok %}
+          <span class="pass">通过</span>
+        {% else %}
+          <span class="fail">未通过</span>
+        {% endif %}
+      </p>
+    </div>
+        <!-- 上传文件列表 -->
+    <div class="mb-3">
+      <h4>上传文件列表</h4>
+      <ul>
+        {% for file in report.uploaded_files %}
+          <li>{{ file }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

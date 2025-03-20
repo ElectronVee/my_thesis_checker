@@ -1,0 +1,38 @@
+<ValidationRules>
+    <DateRules>
+        <!-- 日期顺序校验 -->
+        <Chronological>
+            <Field name="TaskBookSignDate"/>
+
+            <Field name="CheckReportDate"/>
+            <Field name="DefenseDate"/>
+        </Chronological>
+    </DateRules>
+    <RequiredFiles>
+        <!-- 文件类型及版本校验 -->
+        <File name="TaskBook" extension="docx"/>
+        <File name="CheckReport" extension="pdf" minPDFVersion="1.7"/>
+        <File name="Thesis" extension="docx"/>
+        <File name="DefenseSlides" extension="pptx"/>
+    </RequiredFiles>
+    <SignatureRules>
+        <!-- 电子签名检查 -->
+        <SignatureCheck file="ApprovalForm" required="true" method="ocr"/>
+    </SignatureRules>
+    <NamingRules>
+        <!-- 文件命名规则（不同学院） -->
+        <Rule college="Engineering" pattern="ENG_{StudentID}_{Name}" match="strict"/>
+        <Rule college="Arts" pattern="{Name}_{ThesisTitleKeyword}" match="fuzzy"/>
+        <Rule college="Default" pattern="{StudentID}_{Name}" match="strict"/>
+    </NamingRules>
+    <ExtendedChecks>
+        <!-- 可选的扩展性检查 -->
+        <PageCount file="ThesisPDF" min="40" max="200"/>
+        <FirstPage file="ThesisPDF" mustContain="SchoolNameOrLogo"/>
+        <FormComplete file="ReviewForm.pdf">
+            <Field name="ReviewerName" required="true"/>
+            <Field name="Score" required="true"/>
+            <Field name="Comments" required="true"/>
+        </FormComplete>
+    </ExtendedChecks>
+</ValidationRules>

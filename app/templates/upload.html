@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>毕业设计材料上传</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-4">
+    <h2 class="mb-4">毕业设计材料上传</h2>
+    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+      <!-- 文件夹名称输入 -->
+      <div class="form-group">
+        <label for="folder_name">文件夹名称（格式：学生学号-班号-姓名）</label>
+        <input type="text" class="form-control" id="folder_name" name="folder_name" placeholder="例如：12345678-ABC123-张三" required>
+      </div>
+
+      <!-- 文件上传 -->
+      <div class="form-group">
+        <label for="files">选择上传的文件（可多选）</label>
+        <input type="file" class="form-control-file" id="files" name="files" multiple required>
+        <small class="form-text text-muted">
+          请上传所有电子版文件，支持同时上传多个文件（支持 Word、PDF、PSD 等格式）。
+        </small>
+      </div>
+
+      <!-- 提交按钮 -->
+      <button type="submit" class="btn btn-primary">上传并检查</button>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS 和依赖 -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
