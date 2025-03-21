@@ -83,7 +83,7 @@ def OCR_lmj(img_path):
     out = cut_noise(out)
 
     # 保存图片
-    # out.save('E://figures/img_gray.jpg')
+    out.save(r'D:\pythonProject\uploads\img_gray.jpg')
 
     # 仅识别图片中的数字
     # text = pytesseract.image_to_string(out, config='digits')
@@ -124,7 +124,7 @@ def main():
     # print('Total count: %d, correct: %d.' % (total_count, correct_count))
 
     # 单张图片识别
-    image_path = r"D:\pythonProject\test\img.png"
+    image_path = r"D:\pythonProject\test\img_1.png"
     text = OCR_lmj(image_path)
     expected_names = '你好'
     text_clean = text.strip().replace(" ", "").upper()
@@ -138,4 +138,5 @@ def main():
     else:
         print("识别失败，文字不匹配！")
 
-# main()
+
+main()
